@@ -1,9 +1,10 @@
-from keras.models import Sequential  # keras.models 안에 Sequential를 가져옴
+from keras.models import Sequential
 from keras.layers import Dense
 
-import numpy as np # numpy를 가져오고 앞으로 numpy를 np로 줄여쓰겠단 말
+import numpy as np
 x = np.array([1,2,3,4,5])
 y = np.array([1,2,3,4,5])
+x2 = np.array([11,12,13,14,15])
 
 model = Sequential()
 model.add(Dense(1000, input_dim=1, activation='relu'))
@@ -18,8 +19,12 @@ model.add(Dense(200))
 model.add(Dense(100))
 model.add(Dense(1))
 
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 model.fit(x,y, epochs=100, batch_size=1)
 
-mse = model.evaluate(x, y, batch_size=1)
-print("mse : ", mse)
+loss, acc = model.evaluate(x, y, batch_size=1)
+print("acc : ", acc)
+print("loss : ", loss)
+
+y_predict = model.predict(x2)
+print(y_predict)
