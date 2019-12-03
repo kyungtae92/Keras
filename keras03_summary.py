@@ -2,8 +2,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 import numpy as np
-x = np.array([1,2,3,4,5])
-y = np.array([1,2,3,4,5])
+x = np.array([1,2,3,4,5,6,7,8,9,10])
+y = np.array([1,2,3,4,5,6,7,8,9,10])
 x2 = np.array([11,12,13,14,15])
 
 model = Sequential()
