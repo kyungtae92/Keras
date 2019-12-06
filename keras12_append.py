@@ -1,3 +1,4 @@
+# x1과 x2 데이터를 합치고 y1과 y2데이터를 합친 후 DNN 모델을 완성하시오.
 #1. 데이터
 import numpy as np
 
@@ -6,6 +7,11 @@ y1 = np.array([range(501,601), range(711,811), range(100)])
 
 x2 = np.array([range(100,200), range(311,411), range(100,200)])
 y2 = np.array([range(501,601), range(711,811), range(100)])
+
+x = np.append([x1, x2])
+y = np.append([y1, y2])
+print(x.shape)
+print(y.shape)
 
 x1 = np.transpose(x1)
 y1 = np.transpose(y1)
@@ -42,7 +48,7 @@ dense1 = Dense(5, activation='relu')(input2)
 dense2 = Dense(3)(dense1) 
 dense3 = Dense(4)(dense2)
 middle2 = Dense(3)(dense3)
-# concatenate_1 (Concatenate)  (None, 6)  6인 이유는 아웃풋이 3, 3 이기때문에
+
 # concatenate 모델 합치기
 from keras.layers.merge import concatenate
 merge1 = concatenate([middle1, middle2]) # 두 모델의 가장 끝 레이어의 이름을 concatenate 안에 명시 -> merge1 레이어 생성
@@ -58,61 +64,30 @@ output2 = Dense(3)(output2)
 model = Model(inputs = [input1, input2], outputs = [output1, output2]) # 입력이 두개 이상인 것 리스트로 꼭 묶어주기
 model.summary()
 
+
+'''
 #3. 훈련
 # model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 # model.fit(x_train, y_train, epochs=100, batch_size=1)
-model.fit([x1_train, x2_train], [y1_train, y2_train], epochs=100, batch_size=1, validation_data=([x1_val, x2_val], [y1_val, y2_val])) # validation은 검증(머신 자체가 평가하는 것)
+model.fit(x_train, y_train, epochs=100, batch_size=1, validation_data=(x_val, y_val)) # validation은 검증(머신 자체가 평가하는 것)
 
 
 #4. 평가 예측
-mse = model.evaluate([x1_test, x2_test], [y1_test, y2_test], batch_size=1)  # a[0], a[1]
-print("mse : ", mse[0])
-print("mse : ", mse[1])
-print("mse : ", mse[2])
-print("mse : ", mse[3])
-print("mse : ", mse[4])
-# print("mse : ", mse[5])
+loss, mse = model.evaluate(x_test, y_test, batch_size=1)  # a[0], a[1]
+print("mse : ", mse)
 
-y1_predict, y2_predict = model.predict([x1_test, x2_test])
-print(y1_predict, y2_predict)
-
-
-# # RMSE 구하는 수식
-# from sklearn.metrics import mean_squared_error
-# def RMSE(y1_test, y1_predict):
-#     return np.sqrt(mean_squared_error(y1_test, y1_predict))
-# print("RMSE_1 : ", RMSE(y1_test, y1_predict))
-
-# def RMSE(y2_test, y2_predict):
-#     return np.sqrt(mean_squared_error(y2_test, y2_predict))
-# print("RMSE_2 : ", RMSE(y2_test, y2_predict))
-
-# # R2 구하기
-# from sklearn.metrics import r2_score
-# r2_y_predict = r2_score(y1_test, y1_predict)
-# print("R2_1 : ", r2_y_predict)
-
-# r2_y_predict = r2_score(y2_test, y2_predict)
-# print("R2_2 : ", r2_y_predict)
+y_predict = model.predict(x_test)
+print(y_predict)
 
 # RMSE 구하는 수식
 from sklearn.metrics import mean_squared_error
-def RMSE(xxx, yyy):
-    return np.sqrt(mean_squared_error(xxx, yyy))
-RMSE1 = RMSE(y1_test, y1_predict)
-RMSE2 = RMSE(y2_test, y2_predict)
-print("RMSE1 : ", RMSE1)
-print("RMSE2 : ", RMSE2)
-print("RMSE : ", (RMSE1 + RMSE2)/2)
+def RMSE(y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
+print("RMSE : ", RMSE(y_test, y_predict))
 
 # R2 구하기
 from sklearn.metrics import r2_score
-r2_y1_predict = r2_score(y1_test, y1_predict)
-r2_y2_predict = r2_score(y2_test, y2_predict)
-
-print("R2_1 : ", r2_y1_predict)
-print("R2_2 : ", r2_y2_predict)
-print("R2 : ", (r2_y1_predict + r2_y2_predict)/2)
-
-
+r2_y_predict = r2_score(y_test, y_predict)
+print("R2 : ", r2_y_predict)
+'''
