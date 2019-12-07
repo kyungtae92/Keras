@@ -8,11 +8,6 @@ y1 = np.array([range(501,601), range(711,811), range(100)])
 x2 = np.array([range(100,200), range(311,411), range(100,200)])
 y2 = np.array([range(501,601), range(711,811), range(100)])
 
-x = np.append([x1, x2])
-y = np.append([y1, y2])
-print(x.shape)
-print(y.shape)
-
 x1 = np.transpose(x1)
 y1 = np.transpose(y1)
 x2 = np.transpose(x2)
@@ -23,13 +18,15 @@ print(x2.shape) # (100, 3)
 print(y1.shape) # (100, 3)
 print(y2.shape) # (100, 3) 
 
+x = np.append(x1,x2,axis=1)
+y = np.append(y1,y2,axis=1)
+print(x.shape) # (100, 6)
+print(y.shape) # (100, 6)
+
 from sklearn.model_selection import train_test_split
-x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y1, random_state=33, test_size=0.4, shuffle=False)
-x1_val, x1_test, y1_val, y1_test = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
-x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y2, random_state=33, test_size=0.4, shuffle=False)
-x2_val, x2_test, y2_val, y2_test = train_test_split(x2_test, y2_test, random_state=33, test_size=0.5, shuffle=False)
-# 6:2:2
-print(x2_test.shape) # (20, 3)
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=33, test_size=0.4, shuffle=False)
+x_val, x_test, y_val, y_test = train_test_split(x_test, y_test, random_state=33, test_size=0.5, shuffle=False)
+print(x_test.shape) # (20, 6)
 
 
 #2. 모델구성(2개)
@@ -37,31 +34,13 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Input
 # model = Sequential()
 
-input1 = Input(shape=(3,))
+input1 = Input(shape=(6,))
 dense1 = Dense(5, activation='relu')(input1)
 dense2 = Dense(3)(dense1)
 dense3 = Dense(4)(dense2)
-middle1 = Dense(3)(dense3)
+output1 = Dense(6)(dense3)
 
-input2 = Input(shape=(3,)) 
-dense1 = Dense(5, activation='relu')(input2) 
-dense2 = Dense(3)(dense1) 
-dense3 = Dense(4)(dense2)
-middle2 = Dense(3)(dense3)
-
-# concatenate 모델 합치기
-from keras.layers.merge import concatenate
-merge1 = concatenate([middle1, middle2]) # 두 모델의 가장 끝 레이어의 이름을 concatenate 안에 명시 -> merge1 레이어 생성
-
-output1 = Dense(30)(merge1)
-output1 = Dense(13)(output1)
-output1 = Dense(3)(output1)
-
-output2 = Dense(15)(merge1)
-output2 = Dense(32)(output2)
-output2 = Dense(3)(output2)
-
-model = Model(inputs = [input1, input2], outputs = [output1, output2]) # 입력이 두개 이상인 것 리스트로 꼭 묶어주기
+model = Model(inputs = input1, outputs = output1) # 입력이 두개 이상인 것 리스트로 꼭 묶어주기
 model.summary()
 
 
