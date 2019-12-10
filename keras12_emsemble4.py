@@ -35,8 +35,8 @@ middle1 = Dense(3)(dense3)
 
 # concatenate_1 (Concatenate)  (None, 6)  6인 이유는 아웃풋이 3, 3 이기때문에
 # concatenate 모델 합치기
-from keras.layers.merge import concatenate
-merge1 = concatenate(middle1) # 두 모델의 가장 끝 레이어의 이름을 concatenate 안에 명시 -> merge1 레이어 생성
+# from keras.layers.merge import concatenate
+merge1 = middle1 # 두 모델의 가장 끝 레이어의 이름을 concatenate 안에 명시 -> merge1 레이어 생성
 
 output1 = Dense(30)(merge1)
 output1 = Dense(13)(output1)
