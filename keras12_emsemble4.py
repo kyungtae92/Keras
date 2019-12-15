@@ -1,3 +1,4 @@
+# Input 1 , Output 2
 #1. 데이터
 import numpy as np
 
@@ -16,10 +17,10 @@ print(y2.shape) # (100, 3)
 
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y1, random_state=33, test_size=0.4, shuffle=False)
-x1_val, x1_test, y1_val, y1_test = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
+x1_test, x1_val, y1_test, y1_val = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
 y2_train, y2_test = train_test_split(y2, random_state=33, test_size=0.4, shuffle=False)
-y2_val, y2_test = train_test_split(y2_test, random_state=33, test_size=0.5, shuffle=False)
-# 6:2:2
+y2_test, y2_val = train_test_split(y2_test, random_state=33, test_size=0.5, shuffle=False)
+
 print(y2_test.shape) # (20, 3)
 
 #2. 모델구성(2개)
