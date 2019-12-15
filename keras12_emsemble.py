@@ -1,11 +1,12 @@
+# Input 2 , Output 2
 #1. 데이터
 import numpy as np
 
-x1 = np.array([range(100), range(311,411), range(100)])
-y1 = np.array([range(501,601), range(711,811), range(100)])
+x1 = np.array([range(100), range(311,411), range(100)]) # (3, 100)
+y1 = np.array([range(501,601), range(711,811), range(100)]) # (3, 100)
 
-x2 = np.array([range(100,200), range(311,411), range(100,200)])
-y2 = np.array([range(501,601), range(711,811), range(100)])
+x2 = np.array([range(100,200), range(311,411), range(100,200)]) # (3, 100)
+y2 = np.array([range(501,601), range(711,811), range(100)]) # (3, 100)
 
 x1 = np.transpose(x1)
 y1 = np.transpose(y1)
@@ -19,9 +20,9 @@ print(y2.shape) # (100, 3)
 
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y1, random_state=33, test_size=0.4, shuffle=False)
-x1_val, x1_test, y1_val, y1_test = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
+x1_test, x1_val, y1_test, y1_val = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
 x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y2, random_state=33, test_size=0.4, shuffle=False)
-x2_val, x2_test, y2_val, y2_test = train_test_split(x2_test, y2_test, random_state=33, test_size=0.5, shuffle=False)
+x2_test, x2_val, y2_test, y2_val = train_test_split(x2_test, y2_test, random_state=33, test_size=0.5, shuffle=False)
 # 6:2:2
 print(x2_test.shape) # (20, 3)
 
@@ -42,6 +43,7 @@ dense1 = Dense(5, activation='relu')(input2)
 dense2 = Dense(3)(dense1) 
 dense3 = Dense(4)(dense2)
 middle2 = Dense(3)(dense3)
+
 # concatenate_1 (Concatenate)  (None, 6)  6인 이유는 아웃풋이 3, 3 이기때문에
 # concatenate 모델 합치기
 from keras.layers.merge import concatenate
@@ -114,5 +116,3 @@ r2_y2_predict = r2_score(y2_test, y2_predict)
 print("R2_1 : ", r2_y1_predict)
 print("R2_2 : ", r2_y2_predict)
 print("R2 : ", (r2_y1_predict + r2_y2_predict)/2)
-
-

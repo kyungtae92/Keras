@@ -1,8 +1,9 @@
+# Input 2 , Output 3
 #1. 데이터
 import numpy as np
 
 x1 = np.array([range(100), range(311,411), range(100)])  # (3, 100)
-x2 = np.array([range(501,601), range(711,811), range(100)])
+x2 = np.array([range(501,601), range(711,811), range(100)]) # (3, 100)
 
 y1 = np.array([range(100,200), range(311,411), range(100,200)])
 y2 = np.array([range(501,601), range(711,811), range(100)])
@@ -22,11 +23,11 @@ print(y3.shape) # (100, 3)
 
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, y1_train, y1_test = train_test_split(x1, y1, random_state=33, test_size=0.4, shuffle=False)
-x1_val, x1_test, y1_val, y1_test = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
+x1_test, x1_val, y1_test, y1_val = train_test_split(x1_test, y1_test, random_state=33, test_size=0.5, shuffle=False)
 x2_train, x2_test, y2_train, y2_test = train_test_split(x2, y2, random_state=33, test_size=0.4, shuffle=False)
-x2_val, x2_test, y2_val, y2_test = train_test_split(x2_test, y2_test, random_state=33, test_size=0.5, shuffle=False)
+x2_test, x2_val, y2_test, y2_val = train_test_split(x2_test, y2_test, random_state=33, test_size=0.5, shuffle=False)
 y3_train, y3_test = train_test_split(y3, random_state=33, test_size=0.4, shuffle=False)
-y3_val, y3_test = train_test_split(y3_test, random_state=33, test_size=0.5, shuffle=False)
+y3_test, y3_val = train_test_split(y3_test, random_state=33, test_size=0.5, shuffle=False)
 
 print(y3_test.shape)
 
@@ -47,6 +48,7 @@ dense1 = Dense(5, activation='relu')(input2)
 dense2 = Dense(3)(dense1) 
 dense3 = Dense(4)(dense2)
 middle2 = Dense(3)(dense3)
+
 # concatenate_1 (Concatenate)  (None, 6)  6인 이유는 아웃풋이 3, 3 이기때문에
 # concatenate 모델 합치기
 from keras.layers.merge import concatenate
@@ -91,11 +93,11 @@ print(y1_predict, y2_predict, y3_predict)
 # from sklearn.metrics import mean_squared_error
 # def RMSE(y1_test, y1_predict):
 #     return np.sqrt(mean_squared_error(y1_test, y1_predict))
-# print("RMSE_1 : ", RMSE(y1_test, y1_predict))
+# print("RMSE : ", RMSE(y1_test, y1_predict))
 
-# def RMSE(y2_test, y2_predict):
+# def RMSE2(y2_test, y2_predict):
 #     return np.sqrt(mean_squared_error(y2_test, y2_predict))
-# print("RMSE_2 : ", RMSE(y2_test, y2_predict))
+# print("RMSE2 : ", RMSE2(y2_test, y2_predict))
 
 # # R2 구하기
 # from sklearn.metrics import r2_score

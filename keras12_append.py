@@ -18,14 +18,14 @@ print(x2.shape) # (100, 3)
 print(y1.shape) # (100, 3)
 print(y2.shape) # (100, 3) 
 
-x = np.append(x1,x2,axis=1)
-y = np.append(y1,y2,axis=1)
+x = np.append(x1, x2, axis=1)
+y = np.append(y1, y2, axis=1)
 print(x.shape) # (100, 6)
 print(y.shape) # (100, 6)
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=33, test_size=0.4, shuffle=False)
-x_val, x_test, y_val, y_test = train_test_split(x_test, y_test, random_state=33, test_size=0.5, shuffle=False)
+x_test, x_val, y_test, y_val = train_test_split(x_test, y_test, random_state=66, test_size=0.5, shuffle=False) # 6:2:2
 print(x_test.shape) # (20, 6)
 
 
